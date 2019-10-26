@@ -4,12 +4,11 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <sstream>
 
 using namespace std;
 
 string selected_class;
-int index_selected_class = 0;
+int index_selected_class = -1;
 
 vector<string> split_with_slash(string text)
 {
@@ -47,8 +46,8 @@ vector<string> handleFile(string nameFile)
 		inFile.close();
 	}
 	else
-		cout << "Unable to open file";
-	
+		std::cout << "Unable to open file";
+
 
 	return text_file;
 }
@@ -65,18 +64,6 @@ string to_lower(string data)
 	// convert string to upper case
 	for_each(data.begin(), data.end(), [](char& c) { c = ::tolower(c); });
 	return data;
-}
-
-int to_int(string str)
-{
-	// object from the class stringstream 
-	stringstream geek(str);
-
-	// The object has the value str and stream 
-	// it to the integer x 
-	int x = 0;
-	geek >> x;
-	return x;
 }
 
 vector<string> removeDupWord(string str)
@@ -135,12 +122,11 @@ void SelectClass(string classname)
 	{
 		if (x.ClassName == classname)
 		{
-			cout << "you're class is selected ..." << endl;
 			index_selected_class = i;
 			flag = 1;
 			break;
 		}
-		if(classname == "none")
+		else if (classname == "none")
 		{
 			index_selected_class = -1;
 			break;
@@ -168,19 +154,19 @@ void AddClass(string file_name)
 	if (!check_is_not_exist)
 	{
 		add.ClassName = v[0];
-		number_student = to_int(v[1]);
+		number_student = stoi(v[1]);
 		add.Capacity = number_student;
 		while (i < number_student + 2)
 		{
 			Date date;
 			student.Firstname = removeDupWord(v[i])[0];
 			student.Lastname = removeDupWord(v[i])[1];
-			date.Year = to_int(split_with_slash(removeDupWord(v[i])[2])[0]);
-			date.Month = to_int(split_with_slash(removeDupWord(v[i])[2])[1]);
-			date.Day = to_int(split_with_slash(removeDupWord(v[i])[2])[2]);
+			date.Year = stoi(split_with_slash(removeDupWord(v[i])[2])[0]);
+			date.Month = stoi(split_with_slash(removeDupWord(v[i])[2])[1]);
+			date.Day = stoi(split_with_slash(removeDupWord(v[i])[2])[2]);
 			student.Birthday = date;
 			student.Grade = stof(removeDupWord(v[i])[3]);
-			student.ID = to_int(removeDupWord(v[i])[4]);
+			student.ID = stoi(removeDupWord(v[i])[4]);
 			add.Data.push_back(student);
 			i += 1;
 		}
@@ -249,8 +235,8 @@ void Search(unsigned long long int ID_search)
 			if (x.ID == ID_search)
 			{
 
-				cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
-				cout << setw(12) << left << x.Firstname << setw(12) << left << x.Lastname << setw(12) << left << x.ID << setw(12) << left << to_string(x.Birthday.Year) + "/" + to_string(x.Birthday.Month) + "/" + to_string(x.Birthday.Day) << x.Grade << endl;
+				std::cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
+				std::cout << setw(12) << left << x.Firstname << setw(12) << left << x.Lastname << setw(12) << left << x.ID << setw(12) << left << to_string(x.Birthday.Year) + "/" + to_string(x.Birthday.Month) + "/" + to_string(x.Birthday.Day) << x.Grade << endl;
 				break;
 			}
 		}
@@ -263,8 +249,8 @@ void Search(unsigned long long int ID_search)
 			{
 				if (y.ID == ID_search)
 				{
-					cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
-					cout << setw(12) << left << y.Firstname << setw(12) << left << y.Lastname << setw(12) << left << y.ID << setw(12) << left << to_string(y.Birthday.Year) + "/" + to_string(y.Birthday.Month) + "/" + to_string(y.Birthday.Day) << y.Grade << endl;
+					std::cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
+					std::cout << setw(12) << left << y.Firstname << setw(12) << left << y.Lastname << setw(12) << left << y.ID << setw(12) << left << to_string(y.Birthday.Year) + "/" + to_string(y.Birthday.Month) + "/" + to_string(y.Birthday.Day) << y.Grade << endl;
 				}
 			}
 		}
@@ -279,8 +265,8 @@ void Search(string firstname, string lastname)
 		{
 			if (x.Firstname == firstname && x.Lastname == lastname)
 			{
-				cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
-				cout << setw(12) << left << x.Firstname << setw(12) << left << x.Lastname << setw(12) << left << x.ID << setw(12) << left << to_string(x.Birthday.Year) + "/" + to_string(x.Birthday.Month) + "/" + to_string(x.Birthday.Day) << x.Grade << endl;
+				std::cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
+				std::cout << setw(12) << left << x.Firstname << setw(12) << left << x.Lastname << setw(12) << left << x.ID << setw(12) << left << to_string(x.Birthday.Year) + "/" + to_string(x.Birthday.Month) + "/" + to_string(x.Birthday.Day) << x.Grade << endl;
 				break;
 			}
 		}
@@ -293,8 +279,8 @@ void Search(string firstname, string lastname)
 			{
 				if (y.Firstname == firstname && y.Lastname == lastname)
 				{
-					cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
-					cout << setw(12) << left << y.Firstname << setw(12) << left << y.Lastname << setw(12) << left << y.ID << setw(12) << left << to_string(y.Birthday.Year) + "/" + to_string(y.Birthday.Month) + "/" + to_string(y.Birthday.Day) << y.Grade << endl;
+					std::cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
+					std::cout << setw(12) << left << y.Firstname << setw(12) << left << y.Lastname << setw(12) << left << y.ID << setw(12) << left << to_string(y.Birthday.Year) + "/" + to_string(y.Birthday.Month) + "/" + to_string(y.Birthday.Day) << y.Grade << endl;
 				}
 			}
 		}
@@ -303,10 +289,10 @@ void Search(string firstname, string lastname)
 
 void ShowClass()
 {
-	cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
+	std::cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
 	for (Student x : Database[index_selected_class].Data)
 	{
-		cout << setw(12) << left << x.Firstname << setw(12) << left << x.Lastname << setw(12) << left << x.ID << setw(12) << left << to_string(x.Birthday.Year) + "/" + to_string(x.Birthday.Month) + "/" + to_string(x.Birthday.Day) << x.Grade << endl;
+		std::cout << setw(12) << left << x.Firstname << setw(12) << left << x.Lastname << setw(12) << left << x.ID << setw(12) << left << to_string(x.Birthday.Year) + "/" + to_string(x.Birthday.Month) + "/" + to_string(x.Birthday.Day) << x.Grade << endl;
 	}
 }
 
@@ -314,11 +300,11 @@ void ShowAll()
 {
 	for (Class x : Database)
 	{
-		cout << setw(12) << left << "Classname:" << x.ClassName << endl;
-		cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
+		std::cout << setw(12) << left << "Classname:" << x.ClassName << endl;
+		std::cout << setw(12) << left << "Firstname" << setw(12) << left << "Lastname" << setw(12) << left << "ID" << setw(12) << left << "Birthday" << "Grade" << endl;
 		for (Student y : x.Data)
 		{
-			cout << setw(12) << left << y.Firstname << setw(12) << left << y.Lastname << setw(12) << left << y.ID << setw(12) << left << to_string(y.Birthday.Year) + "/" + to_string(y.Birthday.Month) + "/" + to_string(y.Birthday.Day) << y.Grade << endl;
+			std::cout << setw(12) << left << y.Firstname << setw(12) << left << y.Lastname << setw(12) << left << y.ID << setw(12) << left << to_string(y.Birthday.Year) + "/" + to_string(y.Birthday.Month) + "/" + to_string(y.Birthday.Day) << y.Grade << endl;
 		}
 	}
 }
@@ -349,6 +335,33 @@ void SortByName()
 			}
 		}
 	}
+	else
+	{
+		for (int l = 0; l  < Database.size(); l ++)
+		{
+			for (int i = 0; i < Database[l].Data.size() - 1; i++)
+			{
+				for (int j = 0; j < Database[l].Data.size() - i - 1; j++)
+				{
+					Student flag;
+					string f1 = Database[l].Data[j].Firstname;
+					string f2 = Database[l].Data[j + 1].Firstname;
+					for (int k = 0; k < 5; k++)
+					{
+						if (f1[k] > f2[k])
+						{
+							flag = Database[l].Data[j];
+							Database[l].Data[j] = Database[l].Data[j + 1];
+							Database[l].Data[j + 1] = flag;
+							break;
+						}
+						else if (f1[k] < f2[k])
+							break;
+					}
+				}
+			}
+		}
+	}
 }
 
 void SortByID()
@@ -367,7 +380,27 @@ void SortByID()
 					flag = Database[index_selected_class].Data[j];
 					Database[index_selected_class].Data[j] = Database[index_selected_class].Data[j + 1];
 					Database[index_selected_class].Data[j + 1] = flag;
-					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int l = 0; l < Database.size(); l++)
+		{
+			for (int i = 0; i < Database[l].Data.size() - 1; i++)
+			{
+				for (int j = 0; j < Database[l].Data.size() - i - 1; j++)
+				{
+					Student flag;
+					unsigned long long int f1 = Database[l].Data[j].ID;
+					unsigned long long int f2 = Database[l].Data[j + 1].ID;
+					if (f1 > f2)
+					{
+						flag = Database[l].Data[j];
+						Database[l].Data[j] = Database[l].Data[j + 1];
+						Database[l].Data[j + 1] = flag;
+					}
 				}
 			}
 		}
@@ -413,11 +446,11 @@ void Rank()
 		else if (x.Grade < 10)
 			count_E += 1;
 	}
-	cout << "count student with grade 'A' : " << count_A << endl;
-	cout << "count student with grade 'B' : " << count_B << endl;
-	cout << "count student with grade 'C' : " << count_C << endl;
-	cout << "count student with grade 'D' : " << count_D << endl;
-	cout << "count student with grade 'E' : " << count_E << endl;
+	std::cout << "count student with grade 'A' : " << count_A << endl;
+	std::cout << "count student with grade 'B' : " << count_B << endl;
+	std::cout << "count student with grade 'C' : " << count_C << endl;
+	std::cout << "count student with grade 'D' : " << count_D << endl;
+	std::cout << "count student with grade 'E' : " << count_E << endl;
 }
 
 void ShowFilename()
@@ -427,7 +460,7 @@ void ShowFilename()
 	{
 		ifstream newFile("./L" + to_string(i) + ".basu");
 		if (newFile.is_open())
-			cout << "L" + to_string(i) << endl;
+			std::cout << "L" + to_string(i) << endl;
 		else
 			break;
 		i += 1;
@@ -436,31 +469,31 @@ void ShowFilename()
 
 void Help()
 {
-	cout << "This item is help for you to use My program." << endl;
-	cout << "1. You can select class from exist classes with 'basu select class <Class name>'" << endl;
-	cout << "	We have two option for select:" << endl;
-	cout << "	a. none  ---> with this item you are free to use Database without select class." << endl;
-	cout << "	b. class name  ---> with this item you select class to use for another order." << endl;
-	cout << "2. You can Add class to exist classes with 'basu Add class <file_name>'" << endl;
-	cout << "	You can show all file name with use 'basu show Filename'" << endl;
-	cout << "3. You can Remove class from exist classes with 'basu remove class <Class name>'" << endl;
-	cout << "4. You can add student to selected classe with 'basu add student <fullname birthday Id grade>'" << endl;
-	cout << "	** if you dont selected class you can't add student**" << endl;
-	cout << "5. You can remove student from selected classe with 'basu remove student <id>'" << endl;
-	cout << "6. We have two options for search" << endl;
-	cout << "	a. search in selected class with 'basu search <Id or fullname>'" << endl;
-	cout << "	b. search in all class with 'basu search <Id or fullname>'" << endl;
-	cout << "7. You can show all class from exist classes with 'basu show'" << endl;
-	cout << "8. You can show a class from exist classes with 'basu show <Class name>'" << endl;
-	cout << "9. You can sort selected class by name 'basu sort name'" << endl;
-	cout << "10. You can sort selected class by id 'basu sort id'" << endl;
-	cout << "11. You can save changed in file names L1, L2, L3, L4, ... with 'basu save'" << endl;
-	cout << "12. You can exit from program with 'basu exit'" << endl;
-	cout << "13. You can see student's rank in selected class 'basu rank'" << endl;
-	cout << "14. You can go to help page 'basu help'" << endl;
+	std::cout << "This item is help for you to use My program." << endl;
+	std::cout << "1. You can select class from exist classes with 'basu select class <Class name>'" << endl;
+	std::cout << "	We have two option for select:" << endl;
+	std::cout << "	a. none  ---> with this item you are free to use Database without select class." << endl;
+	std::cout << "	b. class name  ---> with this item you select class to use for another order." << endl;
+	std::cout << "2. You can Add class to exist classes with 'basu Add class <file_name>'" << endl;
+	std::cout << "	You can show all file name with use 'basu show Filename'" << endl;
+	std::cout << "3. You can Remove class from exist classes with 'basu remove class <Class name>'" << endl;
+	std::cout << "4. You can add student to selected classe with 'basu add student <fullname birthday Id grade>'" << endl;
+	std::cout << "	** if you dont selected class you can't add student**" << endl;
+	std::cout << "5. You can remove student from selected classe with 'basu remove student <id>'" << endl;
+	std::cout << "6. We have two options for search" << endl;
+	std::cout << "	a. search in selected class with 'basu search <Id or fullname>'" << endl;
+	std::cout << "	b. search in all class with 'basu search <Id or fullname>'" << endl;
+	std::cout << "7. You can show all class from exist classes with 'basu show'" << endl;
+	std::cout << "8. You can show a class from exist classes with 'basu show <Class name>'" << endl;
+	std::cout << "9. You can sort selected class by name 'basu sort name'" << endl;
+	std::cout << "10. You can sort selected class by id 'basu sort id'" << endl;
+	std::cout << "11. You can save changed in file names L1, L2, L3, L4, ... with 'basu save'" << endl;
+	std::cout << "12. You can exit from program with 'basu exit'" << endl;
+	std::cout << "13. You can see student's rank in selected class 'basu rank'" << endl;
+	std::cout << "14. You can go to help page 'basu help'" << endl;
 }
 
-void Start() 
+void Start()
 {
 	string input;
 	int flag_sel_class = 0;
@@ -488,14 +521,21 @@ void Start()
 		{
 			if (flag_sel_class)
 			{
-				Date d1;
-				d1.Year = to_int(split_with_slash(removed[4])[0]);
-				d1.Month = to_int(split_with_slash(removed[4])[1]);
-				d1.Day = to_int(split_with_slash(removed[4])[2]);
-				AddStudent(removed[3], d1, stoll(removed[5]), stof(removed[6]));
+				if (removed[3].size() == 12 && removed[4].size() < 11 && removed[5].size() == 10 && removed[6].size() < 6)
+				{
+					Date d1;
+					d1.Year = stoi(split_with_slash(removed[4])[0]);
+					d1.Month = stoi(split_with_slash(removed[4])[1]);
+					d1.Day = stoi(split_with_slash(removed[4])[2]);
+					AddStudent(removed[3], d1, stoll(removed[5]), stof(removed[6]));
+				}
+				else
+				{
+					cout << "Your input is invalid! try again" << endl;
+				}
 			}
 			else
-				cout << "please select a class !" << endl << endl;
+				std::cout << "please select a class !" << endl << endl;
 		}
 		else if (removed.size() == 4 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SELECT" && to_upper(removed[2]) == "CLASS")
 		{
@@ -531,26 +571,23 @@ void Start()
 		{
 				ShowAll();
 		}
-		else if(removed.size() == 3 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SHOW" && removed[2] != "Filename")
+		else if(removed.size() == 3 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SHOW")
 		{
-			if (flag_sel_class)
-				ShowClass();
-			else
-				cout << "please select a class !" << endl << endl;
+			SelectClass(removed[2]);
+			ShowClass();
+			index_selected_class = -1;
+		}
+		else if (removed.size() == 3 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SHOW" && removed[2] == "Filename")
+		{
+			ShowFilename();
 		}
 		else if (removed.size() == 3 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SORT" && to_upper(removed[2]) == "NAME")
 		{
-			if (flag_sel_class)
-				SortByName();
-			else
-				cout << "please select a class !" << endl << endl;
+			SortByName();
 		}
 		else if (removed.size() == 3 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SORT" && to_upper(removed[2]) == "ID")
 		{
-			if (flag_sel_class)
-				SortByID();
-			else
-				cout << "please select a class !" << endl << endl;
+			SortByID();
 		}
 		else if (removed.size() == 2 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SAVE")
 		{
@@ -567,14 +604,14 @@ void Start()
 				Rank();
 			}
 			else
-				cout << "please select a class !" << endl << endl;
+				std::cout << "please select a class !" << endl << endl;
 		}
 		else if (removed.size() == 3 && to_upper(removed[0]) == "BASU" && to_upper(removed[1]) == "SHOW" && removed[2] == "Filename")
 		{
 			ShowFilename();
 		}
 		else
-			cout << "Input Invalid ... " << endl;
+			std::cout << "Input Invalid ... " << endl;
 	}
 }
 
